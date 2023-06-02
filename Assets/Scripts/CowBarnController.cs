@@ -2,20 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-public class CoopController : MonoBehaviour
+public class CowBarnController : MonoBehaviour
 {
     [Header("Numero En letrero")]
-    public TMP_Text NumberEggs;
-
-    [Header("Nivel del gallinero")]
-    public int coopLevel = 1;
+    public TMP_Text NumberMilk;
 
     [Header("Jugador")]
     public PlayerController playerController;
 
     [Header("Cantidad de huevos del gallinero")]
-    public int unitPerSecond = 1;
-    public int currentValueEggs = 0;
+    public int unitPerSecond = 10;
+    public int currentValueMilk = 0;
 
     //Intervalos de generacion
     private float timer = 0f;
@@ -24,7 +21,7 @@ public class CoopController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        currentValueEggs = 0;
+        currentValueMilk = 0;
     }
 
     // Update is called once per frame
@@ -43,23 +40,12 @@ public class CoopController : MonoBehaviour
 
     private void IncrementValue()
     {
-        switch (coopLevel)
-        {
-            case 1:
-                currentValueEggs += unitPerSecond;
-                break;
-            case 2:
-                currentValueEggs += unitPerSecond * 3;
-                break;
-            case 3:
-                currentValueEggs += unitPerSecond * 5;
-                break;
-        }
+        currentValueMilk += unitPerSecond; 
     }
 
     private void UpdateValueText()
     {
-        NumberEggs.text = currentValueEggs.ToString(); // Actualizar el valor en el Text del UI
+        NumberMilk.text = currentValueMilk.ToString(); // Actualizar el valor en el Text del UI
     }
 
     private void OnTriggerStay(Collider other)
@@ -68,8 +54,8 @@ public class CoopController : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.E))
             {
-                playerController.eggs += currentValueEggs;
-                currentValueEggs = 0;
+                playerController.milk += currentValueMilk;
+                currentValueMilk = 0;
                 Debug.Log("Variable vaciada.");
             }
         }

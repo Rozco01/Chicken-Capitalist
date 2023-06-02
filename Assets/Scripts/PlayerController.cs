@@ -8,6 +8,13 @@ public class PlayerController : MonoBehaviour
     [Header ("References")]
     public Camera playerCamera;
 
+    [Header("Items")]
+    public int eggs = 0;
+    public int mayo = 0;
+    public int milk = 0;
+    public int cheese = 0;
+    public int cash = 0;
+
     //Caracteristicas del personaje
     [Header ("Move Settings")]
     public float walkSpeed = 5f;
