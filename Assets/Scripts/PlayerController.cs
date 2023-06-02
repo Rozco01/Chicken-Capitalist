@@ -1,11 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-[RequireComponent (typeof(CharacterController))]
+using TMPro;
+[RequireComponent(typeof(CharacterController))]
 public class PlayerController : MonoBehaviour
 {
     // Variables usadas
-    [Header ("References")]
+    [Header("References")]
     public Camera playerCamera;
 
     [Header("Items")]
@@ -16,16 +17,23 @@ public class PlayerController : MonoBehaviour
     public int cash = 0;
 
     //Caracteristicas del personaje
-    [Header ("Move Settings")]
+    [Header("Move Settings")]
     public float walkSpeed = 5f;
     public float runSpeed = 10f;
     public float gravityScale = -0.05f;
 
-    [Header ("Jump Settings")]
+    [Header("Jump Settings")]
     public float jumpHeight = 1000f;
 
-    [Header ("Rotation Settings")]
+    [Header("Rotation Settings")]
     public float rotationSensibility = 10f;
+
+    [Header("HUD Text")]
+    public TMP_Text eggsText;
+    public TMP_Text milkText;
+    public TMP_Text cashText;
+    public TMP_Text mayoText;
+    public TMP_Text cheeseText;
 
 
     private float cameraVerticalAngle;
@@ -34,7 +42,8 @@ public class PlayerController : MonoBehaviour
     CharacterController characterController;
 
 
-    private void Start(){
+    private void Start()
+    {
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
     }
@@ -44,17 +53,22 @@ public class PlayerController : MonoBehaviour
         characterController = GetComponent<CharacterController>();
     }
 
-    private void Update(){
+    private void Update()
+    {
         Move();
         Look();
+        UpdateValueText();
     }
 
-    private void Move(){
-        if(characterController.isGrounded){
+    private void Move()
+    {
+        if (characterController.isGrounded)
+        {
             moveInput = new Vector3(Input.GetAxis("Horizontal"), 0f, Input.GetAxis("Vertical"));
-            moveInput = Vector3.ClampMagnitude(moveInput,1f);
+            moveInput = Vector3.ClampMagnitude(moveInput, 1f);
             moveInput = transform.TransformDirection(moveInput) * runSpeed;
-            if(Input.GetButtonDown("Jump")){
+            if (Input.GetButtonDown("Jump"))
+            {
                 moveInput.y = Mathf.Sqrt(jumpHeight * -2f * gravityScale);
             }
         }
@@ -62,7 +76,8 @@ public class PlayerController : MonoBehaviour
         characterController.Move(moveInput * Time.deltaTime);
     }
 
-    private void Look(){
+    private void Look()
+    {
         rotationinput.x = Input.GetAxis("Mouse X") * rotationSensibility * Time.deltaTime;
         rotationinput.y = Input.GetAxis("Mouse Y") * rotationSensibility * Time.deltaTime;
 
@@ -70,6 +85,16 @@ public class PlayerController : MonoBehaviour
         cameraVerticalAngle = Mathf.Clamp(cameraVerticalAngle, -70, 70);
 
         transform.Rotate(Vector3.up * rotationinput.x);
-        playerCamera.transform.localRotation = Quaternion.Euler(-cameraVerticalAngle,0f,0f);
+        playerCamera.transform.localRotation = Quaternion.Euler(-cameraVerticalAngle, 0f, 0f);
     }
+
+    private void UpdateValueText()
+    {
+        eggsText.text = eggs.ToString(); // Actualizar el valor en el Text del UI
+        milkText.text = milk.ToString(); // Actualizar el valor en el Text del UI
+        cheeseText.text = cheese.ToString(); // Actualizar el valor en el Text del UI
+        mayoText.text = mayo.ToString(); // Actualizar el valor en el Text del UI
+        cashText.text = cash.ToString(); // Actualizar el valor en el Text del UI
+    }
+
 }
