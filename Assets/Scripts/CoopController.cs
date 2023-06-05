@@ -7,6 +7,9 @@ public class CoopController : MonoBehaviour
     [Header("Numero En letrero")]
     public TMP_Text NumberEggs;
 
+    [Header("Mensaje Interfaz")]
+    public TMP_Text Validar_E;
+
     [Header("Nivel del gallinero")]
     public int coopLevel = 1;
 
@@ -17,6 +20,11 @@ public class CoopController : MonoBehaviour
     public int unitPerSecond = 1;
     public int currentValueEggs = 0;
 
+    [Header("SFX")]
+    public AudioSource audioSource;
+    public AudioClip collectSonido;
+    public AudioClip buildSonido;
+
     //Intervalos de generacion
     private float timer = 0f;
     private float interval = 1f;
@@ -25,6 +33,8 @@ public class CoopController : MonoBehaviour
     void Start()
     {
         currentValueEggs = 0;
+        Validar_E.enabled = false;
+        audioSource.PlayOneShot(buildSonido);
     }
 
     // Update is called once per frame
@@ -62,6 +72,24 @@ public class CoopController : MonoBehaviour
         NumberEggs.text = currentValueEggs.ToString(); // Actualizar el valor en el Text del UI
     }
 
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            Validar_E.text = "Oprima E para recoger";
+            Validar_E.enabled = true;
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            Validar_E.enabled = false;
+        }
+    }
+
     private void OnTriggerStay(Collider other)
     {
         if (other.CompareTag("Player"))
@@ -70,8 +98,10 @@ public class CoopController : MonoBehaviour
             {
                 playerController.eggs += currentValueEggs;
                 currentValueEggs = 0;
+                audioSource.PlayOneShot(collectSonido);
                 Debug.Log("Variable vaciada.");
             }
+
         }
     }
 }
