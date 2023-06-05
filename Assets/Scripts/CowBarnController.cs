@@ -14,12 +14,13 @@ public class CowBarnController : MonoBehaviour
     public TMP_Text Validar_E;
 
     [Header("Cantidad de leche del establo")]
-    public int unitPerSecond = 10;
+    public int unitPerSecond = 1;
     public int currentValueMilk = 0;
 
     [Header("SFX")]
     public AudioSource audioSource;
     public AudioClip collectSonido;
+    public AudioClip buildSonido;
 
     //Intervalos de generacion
     private float timer = 0f;
@@ -29,6 +30,7 @@ public class CowBarnController : MonoBehaviour
     void Start()
     {
         currentValueMilk = 0;
+        audioSource.PlayOneShot(buildSonido);
     }
 
     // Update is called once per frame

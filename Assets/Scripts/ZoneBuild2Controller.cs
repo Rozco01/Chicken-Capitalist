@@ -6,8 +6,11 @@ using TMPro;
 
 public class ZoneBuild2Controller : MonoBehaviour
 {
-    [Header("Gellinero")]
+    [Header("Gallinero")]
     public GameObject gallinero2;
+
+    [Header("Precio")]
+    public int precioGallinero = 0;
 
     [Header("Letrero")]
     public Image imagenCanvas;
@@ -30,7 +33,7 @@ public class ZoneBuild2Controller : MonoBehaviour
     {
         gallinero2.SetActive(false);
         imagenCanvas.sprite = nuevaImagen;
-        cash.text = "$100";
+        cash.text = precioGallinero.ToString();
     }
 
     // Update is called once per frame
@@ -62,9 +65,9 @@ public class ZoneBuild2Controller : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.E))
             {
-                if (playerController.cash >= 100){
+                if (playerController.cash >= precioGallinero){
                     
-                    playerController.cash -= 100;
+                    playerController.cash -= precioGallinero;
                     imagenCanvas.sprite = huevoImagen;
                     cash.text = "";
                     gallinero2.SetActive(true);
