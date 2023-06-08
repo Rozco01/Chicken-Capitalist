@@ -11,6 +11,12 @@ public class DayNightCycle : MonoBehaviour
     public float anguloNocheInicio = -90f;
     public float anguloNocheFin = 0f;
 
+    [Header("Script jugador")]
+    public GameObject scarGun;
+
+    [Header("Script del spawn de enemigos")]
+    public GameObject enemySpawner;
+
     [Header("Audio")]
     public AudioClip audioDia;
     public AudioClip audioNoche;
@@ -37,6 +43,8 @@ public class DayNightCycle : MonoBehaviour
                 audioSource.clip = audioDia;
                 audioSource.loop = true;
                 audioSource.Play();
+                scarGun.SetActive(false);
+                enemySpawner.SetActive(false);
             }
         }   
         else{
@@ -45,6 +53,9 @@ public class DayNightCycle : MonoBehaviour
                 audioSource.clip = audioNoche;
                 audioSource.loop = true;
                 audioSource.Play();
+                scarGun.SetActive(true);
+                enemySpawner.SetActive(true);
+                enemySpawner.SetActive(true);
             }
         }
         // Reproducir clip de audio continuamente
